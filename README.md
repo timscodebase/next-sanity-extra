@@ -1,9 +1,11 @@
 # next-sanity-extra
+
 This package aims to simplify integrating Next.js, and the Sanity.io CMS.
-It gives you simple functions for setting up sanity, fetching static props, and using live previews as per  https://www.sanity.io/blog/live-preview-with-nextjs
-Checkout out the sanity starter template at https://github.com/otterdev-io/sanity-template-nextjs-vercel-extra to see an example of usage.
+It gives you simple functions for setting up sanity, fetching static props, and using live previews as per  <https://www.sanity.io/blog/live-preview-with-nextjs>
+Checkout out the sanity starter template at <https://github.com/otterdev-io/sanity-template-nextjs-vercel-extra> to see an example of usage.
 
 # Usage
+
 First to setup the functions, create a module, eg `lib/sanity.js`. Call `setupNextSanity(config)` to get your helper functions:
 
 ```js
@@ -48,7 +50,9 @@ export default function ServicesPage(props) {
   <PortableText blocks={data.content} />
 }
 ```
+
 ## Preview API
+
 To serve live previews, create eg `pages/api/preview.js`.
 
 With the default settings - forwarding to /[slug]:
@@ -60,6 +64,7 @@ export default previewApi({token: process.env.SANITY_PREVIEW_TOKEN})
 ```
 
 to forward to custom parameter - eg 'page'
+
 ```js
 import previewApi from 'next-sanity-extra/api/preview'
 
@@ -68,12 +73,14 @@ export default previewApi({
   redirect: (req) => `/${req.query.page}`
 });
 ```
+
 ## Functions
 
 ```js
 import { setupNextSanity } from "next-sanity-extra"
 ```
-`setupNextSanity(client: ClientConfig, serializers?: PortableTextSerializers)` 
+
+`setupNextSanity(client: ClientConfig, serializers?: PortableTextSerializers)`
 
 Returns an object with functions you can use to ease integration:
 
@@ -83,23 +90,28 @@ Returns an object with functions you can use to ease integration:
 - `sanityStaticProps({context, query, queryParams, authenticated})` - Returns static props for getStaticProps.
   - `context` - the context passed into getStaticProps
   - `query` - the query to run for the page.
-  - `queryParams` - [optional] params to substitute into the query. If not provided, will be taken from context.params. 
+  - `queryParams` - [optional] params to substitute into the query. If not provided, will be taken from context.params.
   - `authenticated` - [optional] whether to use an authenticated sanity client, if you have provided token to config. Defaults to false.
 - `useSanityPreview(query, props)` - A hook which returns preview-enabled data for use in each page.
   - `query` - the query to run for the page
   - `props` - props passed into the page component
 
 ### API Functions
+
 ```js
 import previewApi from "next-sanity-extra/api/preview"
 ```
+
 `previewApi({token, data, redirect})` - API handler to call from sanity for page previews:
-  - `token` - Sanity API Token
-  - `data` - [optional] Function from request to preview data to return to client
-  - `redirect` - [optional] Function from request to a path to redirect to. Defaults to `/${req.query.slug}`
+
+- `token` - Sanity API Token
+- `data` - [optional] Function from request to preview data to return to client
+- `redirect` - [optional] Function from request to a path to redirect to. Defaults to `/${req.query.slug}`
 
 # Typescript Usage
+
 eg `pages/index.tsx`:
+
 ```tsx
 import { sanityStaticProps, useSanityQuery, PortableText } from "../lib/sanity";
 import groq from "next-sanity";
@@ -122,6 +134,6 @@ export default function ServicesPage(props: SanityProps) {
   return (
       <h1>{data.title}</h1>
       <PortableText blocks={data.content} />
-  )
+  );
 }
-``` 
+```
