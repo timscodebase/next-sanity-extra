@@ -119,7 +119,9 @@ export default function ServicesPage(props: SanityProps) {
   const { data, loading, error } = useSanityQuery(query, props);
 
   // Render page with data
-  <h1>{data.title}</h1>
-  <PortableText blocks={data.content} />
+  return (
+      <h1>{data.title}</h1>
+      <PortableText blocks={data.content} />
+  )
 }
 ``` 
